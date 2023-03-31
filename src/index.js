@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     color:#fff;
     background-color: #222;
+    box-sizing: border-box;
+  }
+  button{
+    padding:0;
   }
 `
 const root = ReactDOM.createRoot(document.getElementById('root'));
