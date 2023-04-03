@@ -6,21 +6,21 @@ const ContentBox = styled.div`
   align-items: center;
   width: 100%; 
   height: 100%;
-  padding: 1em;
+  padding: 0.8em;
   position: absolute;
   top: 0;
   left: 0;
-  transition: all 0.8s ease-in-out;
+  transition: all 0.5s ease-in-out;
   transform: translateY(100%);
   opacity: 0;
   background: rgba(0,0,0,0.8);
   color:#fff;
+  font-size: 0.8em;
 `;
 
 const ImgBox = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   overflow: hidden;
   & > img {
     width: 100%;
@@ -36,7 +36,7 @@ const PotoBox = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  padding:1em;
+  padding:0.5em;
   gap: 0.8em;
   overflow: hidden;
   border: 1px solid #222;

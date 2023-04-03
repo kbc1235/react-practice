@@ -3,14 +3,18 @@ import styled from "styled-components";
 import Item from "./Item";
 import PageNation from "./PageNation";
 
+const Wrap = styled.div`
+  width: min(100- 110px, 1200);
+`;
 const HeadWrap = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
+  align-items: center;
   width: 100%;
   min-height: 30px;
-  padding: 1em;
+  padding: 0.5em;
 `;
 
 const FooterWrap = styled.div`
@@ -20,9 +24,13 @@ const FooterWrap = styled.div`
   display: flex;
   width: 100%;
   min-height: 30px;
-  padding: 1em;
+  padding: 0.5em;
 `;
-
+const Head = styled.div`
+  font-size: 2em;
+  font-weight: 700;
+  
+`
 const ViewPotos = styled.select`
   margin-left: auto;
   width: 80px;
@@ -53,48 +61,73 @@ const PotoWrap = styled.div`
   padding: 1em;
 `;
 
+const Loding = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size:5em;
+  color: #fff;
+`;
+
 const Content = () => {
-  const [photo, setPhoto] = useState([]);
+  const [photo, setPhoto] = useState(null);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-
+  console.log(photo);
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos/")
-      .then((res) => res.json())
-      .then((json) => setPhoto(json));
+    setTimeout(() => {
+      console.log("loding...");
+      fetch("https://jsonplaceholder.typicode.com/photos/")
+        .then((res) => res.json())
+        .then((json) => setPhoto(json));
+    }, 8000);
   }, []);
-  console.log('a'+offset,'b'+offset + limit)
+  console.log("a" + offset, "b" + offset + limit);
   return (
     <>
-      <HeadWrap>
-        <ViewPotos
-          value={limit}
-          onChange={({ target: { value } }) => setLimit(parseInt(value))}
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-        </ViewPotos>
-      </HeadWrap>
-      <Constes>
-        <PotoWrap>
-          {photo.slice(offset, offset + limit).map((data) => {
-            return (
-              <Item
-                id={data.id}
-                thumbnailUrl={data.thumbnailUrl}
-                title={data.title}
-                url={data.url}
-                key={data.title}
-              />
-            );
-          })}
-        </PotoWrap>
-      </Constes>
-      <FooterWrap>
-        <PageNation total={100} limit={limit} page={page} setPage={setPage} />
-      </FooterWrap>
+      {!photo && <Loding>로딩중..</Loding>}
+
+      {photo && (
+        <Wrap>
+          <HeadWrap>
+            <Head>리액트 연습 - 페이지네이션 만들어보기</Head>
+            <ViewPotos
+              value={limit}
+              onChange={({ target: { value } }) => setLimit(parseInt(value))}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </ViewPotos>
+          </HeadWrap>
+          <Constes>
+            <PotoWrap>
+              {photo.slice(offset, offset + limit).map((data) => {
+                return (
+                  <Item
+                    id={data.id}
+                    thumbnailUrl={data.thumbnailUrl}
+                    title={data.title}
+                    url={data.url}
+                    key={data.title}
+                  />
+                );
+              })}
+            </PotoWrap>
+          </Constes>
+          <FooterWrap>
+            <PageNation
+              total={100}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+          </FooterWrap>
+        </Wrap>
+      )}
     </>
   );
 };

@@ -50,9 +50,6 @@ for (let idx = 1, otherCount = 0; idx < count; idx +=10, otherCount++){
 
 const PageNation = ({ total, limit, page, setPage }) => {
   const pageNums = Math.ceil(total / limit);
-  console.log("페이지넘버" + pageNums);
-  console.log("총" + total);
-  console.log("___" + limit);
 
   return (
     <PageNationWrap>
